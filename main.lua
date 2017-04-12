@@ -27,6 +27,9 @@ y6 = valTelaY *6
 y7 = valTelaY *7
 
 
+local contadores = {operacao = 0,final = 0}
+
+
 local texto1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
 local texto = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 40})
 
@@ -184,6 +187,8 @@ function eventos_botoes_Num(event)
 		mostraTela(event.target.valor)
 		numero= numero .. event.target.valor
 		labelTexto1 = labelTexto1 .. event.target.valor
+		contadores.operacao = 1
+		
 	end
 
 end
@@ -192,13 +197,16 @@ end
 function eventos_botoes_sinais(event)
 
 	if event.phase == "began" then
-
-		operador = event.target.valor
-		texto.text = texto.text .. operador	
-		labelTexto1 = labelTexto1 .. operador
-		n1 = numero
-		numero = ""
-
+		
+		if contadores.operacao > 0 then
+		
+			operador = event.target.valor
+			texto.text = texto.text .. operador	
+			labelTexto1 = labelTexto1 .. operador
+			n1 = numero
+			numero = ""
+			contadores.operacao = 0
+		end
 	end
 
 end

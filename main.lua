@@ -29,13 +29,18 @@ y7 = valTelaY *7
 
 local contadores = {operacao = 0,final = 0}
 
+local reinicia = false
+
 
 local texto1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
 local texto = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 40})
 
-labelTexto1 = ""
 
-operador = ""
+local resultado = ""
+
+local labelTexto1 = ""
+
+local operador = ""
 
 local numero = ""
 
@@ -110,9 +115,8 @@ function cria_botao()
 	soma.valor = "+"
 end
 
-
 function escolhaOperacao(n1,n2)
-	
+	result = 0
 	if operador ==  "+" then
 		result = somar(n1,n2)
 		
@@ -141,16 +145,24 @@ function escolhaOperacao(n1,n2)
 	end
 	
 	if operador == "/" then
-		result = dividir(n1,n2)
 		
+		if(n2 == "0" ) then
+		texto1.text = "Não se pode dividir por zero, Anderson Seabra"
+		texto.text = ""
+		else
+		
+		result = dividir(n1,n2)
 		texto.text = result
 		n1 = 0
 		n2 = 0
 		numero = ""
+		
+		end
 	end
 	
+	return result
+	
 end
-
 
 function somar(n1,n2)
 	local soma = n1+n2
@@ -184,11 +196,23 @@ end
 function eventos_botoes_Num(event)
 	
 	if event.phase ==  "began" then
-		mostraTela(event.target.valor)
-		numero= numero .. event.target.valor
-		labelTexto1 = labelTexto1 .. event.target.valor
-		contadores.operacao = 1
 		
+		if(reinicia == true) then
+			texto.text = ""
+			texto1.text = ""
+			labelTexto1 = ""
+			mostraTela(event.target.valor)
+			numero= numero .. event.target.valor
+			labelTexto1 = labelTexto1 .. event.target.valor
+			contadores.operacao = 1
+			reinicia = false
+		else
+			mostraTela(event.target.valor)
+			numero= numero .. event.target.valor
+			labelTexto1 = labelTexto1 .. event.target.valor
+			contadores.operacao = 1
+		
+		end
 	end
 
 end
@@ -199,13 +223,14 @@ function eventos_botoes_sinais(event)
 	if event.phase == "began" then
 		
 		if contadores.operacao > 0 then
-		
+			
 			operador = event.target.valor
 			texto.text = texto.text .. operador	
 			labelTexto1 = labelTexto1 .. operador
 			n1 = numero
 			numero = ""
 			contadores.operacao = 0
+			
 		end
 	end
 
@@ -228,8 +253,10 @@ function evento_Botao_Igual(event)
 		
 		n2 = numero
 		texto1.text = labelTexto1
-		escolhaOperacao(n1,n2)
+		resultado = escolhaOperacao(n1,n2)
 		labelTexto1 = ""
+		reinicia = true
+		
 	end
 
 

@@ -31,10 +31,10 @@ local caixa1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3
 local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 40})
 
 
-local n1 = 0
-local n2 = 0
+num1 = 0
+num2 = 0
 
-
+local operacao = ""
 
 --Cria todos os botoes da calculadora
 function cria_botao()
@@ -112,35 +112,78 @@ function dividir(n1,n2)
 	return divide
 end
 
-
-
 function eventos(event)
 	
 	if event.phase == "began" then
 	
-		if event.target:getLabel() == "+" then
+		if event.target:getLabel() == "AC" then
+			
+			caixa1.text = ""
+			caixa2.text = ""
 		
-		end
+		else if event.target:getLabel() == "+" then
+			
+			num1 = caixa2.text
+			operacao = "+"
+			caixa2.text = ""
 		
-		if event.target:getLabel() == "-" then
+		elseif event.target:getLabel() == "-" then
+			num1 = caixa2.text
+			operacao = "-"
+			caixa2.text = ""
 		
-		end
 		
-		if event.target:getLabel() == "*" then
+		else if event.target:getLabel() == "x" then
+			num1 = caixa2.text
+			operacao = "*"
+			caixa2.text = ""
 		
-		end
 		
-		if event.target:getLabel() == "/" then
+		else if event.target:getLabel() == "/" then
+			num1 = caixa2.text
+			operacao = "/"
+			caixa2.text = ""
+
+		
+		else if event.target:getLabel() == "=" then
+			
+			if operacao ==  "+" then
 				
+				num2= caixa2.text
+				caixa2.text = somar(num1,num2)
+				
+			else if operacao ==  "-" then
+				num2= caixa2.text
+				caixa2.text = subtrair(num1,num2)
+				
+			else if operacao == "*" then
+				num2 = caixa2.text
+				caixa2.text = multiplicar(num1,num2)
+				
+				
+			else if operacao == "/" then
+				num2 = caixa2.text
+				caixa2.text = dividir(num1,num2)
+				
+			
+			end
+			end
+			end
+			end
+		
+		else
+		
+			caixa2.text = caixa2.text .. event.target:getLabel()
+		
+		end
+		end
+		end
+		end
 		end
 		
 		
-
 	end
-
 end
-
-
 
 function adicionaEventosBotoes()
 	
@@ -162,8 +205,8 @@ function adicionaEventosBotoes()
 	divisao:addEventListener("touch",eventos)
 
 
-	AC:addEventListener("touch",evento)
-	igual:addEventListener("touch",evento)
+	AC:addEventListener("touch",eventos)
+	igual:addEventListener("touch",eventos)
 
 end
 

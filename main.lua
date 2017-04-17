@@ -28,9 +28,9 @@ y6 = valTelaY *6
 y7 = valTelaY *7
 
 local caixa1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
-local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 40})
+local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 35})
 
-
+calculadora= {reinicio = false}
 num1 = 0
 num2 = 0
 
@@ -109,6 +109,14 @@ function multiplicar(n1,n2)
 end
 
 function dividir(n1,n2)
+	
+	if(n2 == "0") then
+		local mensagem = "Não se divide por zero!"
+		
+		return mensagem
+	
+	end
+	
 	local divide = n1/n2
 	
 	return divide
@@ -117,7 +125,22 @@ end
 function eventos(event)
 	
 	if event.phase == "began" then
-	
+		
+		if calculadora.reinicio == true then
+			
+			caixa2.text = ""
+			calculadora.reinicio = false
+			
+		end
+		
+		if caixa2.text == "Não se divide por zero!" then
+			
+			caixa2.text = ""
+			
+		end
+		
+		
+		
 		if event.target:getLabel() == "AC" then
 			
 			caixa1.text = ""
@@ -145,9 +168,13 @@ function eventos(event)
 			num1 = caixa2.text
 			operacao = "/"
 			caixa2.text = ""
-
+		else if event.target:getLabel() == "," then
+		
+		
 		
 		else if event.target:getLabel() == "=" then
+			
+			calculadora.reinicio = true
 			
 			if operacao ==  "+" then
 				
@@ -174,9 +201,10 @@ function eventos(event)
 			end
 		
 		else
-		
+			
 			caixa2.text = caixa2.text .. event.target:getLabel()
 		
+		end
 		end
 		end
 		end

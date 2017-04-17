@@ -41,7 +41,9 @@ function cria_botao()
 	-- primeira linha
 	AC = widget.newButton({label = "AC", x = x1 ,y = (y2+y3)/2 ,width = (x1 +x2+x3)/3  - 1, height = y1 - 1, shape = "rect"})
 	
-	DEL = widget.newButton({label = "DEL", x = x3, y = (y2+y3)/2 , width = (x1 +x2+x3)/3 -1 , height =  y1 - 1, shape = "rect"})
+	mais_menos = widget.newButton({label = "+/-", x = (x2+x3)/2 ,y = (y2+y3)/2 ,width = x1 - 1, height = y1 - 1, shape = "rect"})
+	
+	porcentagem = widget.newButton({label = "%", x = (x3+x4)/2 ,y = (y2+y3)/2 ,width = x1 - 1, height = y1 - 1, shape = "rect"})
 
 	--segunda linha
 	b7 = widget.newButton({label = "7", x = x1/2, y = (y3+y4)/2,width = x1 - 1, height = y1 - 1, shape = "rect" })	 

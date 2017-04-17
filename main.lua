@@ -28,7 +28,7 @@ y6 = valTelaY *6
 y7 = valTelaY *7
 
 local caixa1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
-local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 35})
+local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 30})
 
 calculadora= {reinicio = false}
 num1 = 0
@@ -168,9 +168,16 @@ function eventos(event)
 			num1 = caixa2.text
 			operacao = "/"
 			caixa2.text = ""
+			
+			
+		else if event.target:getLabel() == "+/-" then
+			
+			caixa2.text = caixa2.text * -1
+			
+		
 		else if event.target:getLabel() == "," then
-		
-		
+			
+			caixa2.text = caixa2.text .. "."
 		
 		else if event.target:getLabel() == "=" then
 			
@@ -210,6 +217,7 @@ function eventos(event)
 		end
 		end
 		end
+		end
 		
 		
 	end
@@ -237,7 +245,9 @@ function adicionaEventosBotoes()
 
 	AC:addEventListener("touch",eventos)
 	igual:addEventListener("touch",eventos)
-
+	mais_menos:addEventListener("touch",eventos)
+	porcentagem:addEventListener("touch",eventos)
+	ponto:addEventListener("touch",eventos)
 end
 
 

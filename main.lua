@@ -78,7 +78,7 @@ function cria_botao()
 
 	b0 = widget.newButton({label = "0", x = x1/2, y = (y6+y7)/2,width = x1 - 1, height = y1 - 1, shape = "rect" })
 
-	ponto = widget.newButton({label = ".",fontSize = 20, x = (x1+x2)/2, y = (y6+y7)/2,width = x1 - 1, height = y1 - 1, shape = "rect" })
+	ponto = widget.newButton({label = ",",fontSize = 20, x = (x1+x2)/2, y = (y6+y7)/2,width = x1 - 1, height = y1 - 1, shape = "rect" })
 	
 	igual = widget.newButton({label = "=", x = (x2+x3)/2, y = (y6+y7)/2,width = x1 - 1, height = y1 - 1, shape = "rect" })
 

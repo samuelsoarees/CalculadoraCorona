@@ -131,8 +131,6 @@ function dividir(n1,n2)
 	return divisao
 end
 
-
-
 function eventos(event)
 	
 	if event.phase == "began" then
@@ -297,8 +295,6 @@ function adicionaEventosBotoes()
 	porcentagem:addEventListener("touch",eventos)
 	ponto:addEventListener("touch",eventos)
 end
-
-
 
 cria_botao()
 adicionaEventosBotoes()

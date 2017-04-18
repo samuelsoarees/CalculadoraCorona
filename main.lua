@@ -30,7 +30,7 @@ y7 = valTelaY *7
 local caixa1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
 local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 30})
 
-calculadora= {reinicio = false}
+calculadora= {reinicio = false,inicializa = true}
 num1 = 0
 num2 = 0
 
@@ -117,9 +117,9 @@ function dividir(n1,n2)
 	
 	end
 	
-	local divide = n1/n2
+	local divisao = n1/n2
 	
-	return divide
+	return divisao
 end
 
 function eventos(event)
@@ -139,7 +139,11 @@ function eventos(event)
 			
 		end
 		
+		if caixa2.text == "" then
+			
+			calculadora.inicializa = false
 		
+		end
 		
 		if event.target:getLabel() == "AC" then
 			
@@ -171,14 +175,24 @@ function eventos(event)
 			
 			
 		else if event.target:getLabel() == "+/-" then
+			if caixa2.text == "" or caixa2.text == "0" then
 			
+			else
 			caixa2.text = caixa2.text * -1
 			
-		
+			end
 		else if event.target:getLabel() == "," then
 			
 			caixa2.text = caixa2.text .. "."
+			
 		
+		
+		else if event.target:getLabel() == "%" then
+			if caixa2.text == "" or caixa2.text == "0" then
+				
+			else
+				caixa2.text = caixa2.text /100
+			end
 		else if event.target:getLabel() == "=" then
 			
 			calculadora.reinicio = true
@@ -211,6 +225,7 @@ function eventos(event)
 			
 			caixa2.text = caixa2.text .. event.target:getLabel()
 		
+		end
 		end
 		end
 		end

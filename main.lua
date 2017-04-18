@@ -35,8 +35,8 @@ calculadora= {
 	reinicio = false,
 	inicializa = true, 
 	verificaIgual = false,
-	apaga = false
-	
+	apaga = false,
+	virgurla = true
 }
 
 
@@ -131,33 +131,6 @@ function dividir(n1,n2)
 	return divisao
 end
 
-function repeticaoIgual()
-	
-		
-	if operacao == "+" then
-		
-		caixa2.text = somar(num1,num2)
-		
-	else if operacao == "-" then
-		num1 = calculadora.resultado
-		caixa2.text = subtrair(num1,num2)
-
-	else if operacao == "*" then
-		num1 = calculadora.resultado
-		caixa2.text = multiplicar(num1,num2)
-	
-	else if operacao == "/" then
-		num1 = calculadora.resultado
-		caixa2.text = dividir(num1,num2)
-
-
-	end
-	end
-	end
-	end	
-	
-	
-end
 
 
 function eventos(event)
@@ -187,30 +160,33 @@ function eventos(event)
 			
 			caixa1.text = ""
 			caixa2.text = ""
+			calculadora.virgurla = true
 		
 		else if event.target:getLabel() == "+" then
 			
 			num1 = caixa2.text
 			operacao = "+"
 			caixa2.text = ""
-		
+			calculadora.virgurla = true
+			
 		elseif event.target:getLabel() == "-" then
 			num1 = caixa2.text
 			operacao = "-"
 			caixa2.text = ""
-		
+			calculadora.virgurla = true
 		
 		else if event.target:getLabel() == "x" then
 			num1 = caixa2.text
 			operacao = "*"
 			caixa2.text = ""
-		
+			calculadora.virgurla = true
 		
 		else if event.target:getLabel() == "/" then
+			
 			num1 = caixa2.text
 			operacao = "/"
 			caixa2.text = ""
-			
+			calculadora.virgurla = true
 			
 		else if event.target:getLabel() == "+/-" then
 			if caixa2.text == "" or caixa2.text == "0" then
@@ -223,9 +199,11 @@ function eventos(event)
 		
 		
 		else if event.target:getLabel() == "," then
+			if calculadora.virgurla == true and caixa2.text ~= "" then
 			
-			caixa2.text = caixa2.text .. "."
-			
+ 			caixa2.text = caixa2.text .. "."
+			calculadora.virgurla = false
+			end
 		
 		
 		else if event.target:getLabel() == "%" then
@@ -240,6 +218,7 @@ function eventos(event)
 			
 			if caixa2.text ~= "" and num1 ~= "" and caixa2.text ~= "Não se divide por zero!" then
 				calculadora.apaga = true
+				calculadora.virgurla = true
 				if operacao ==  "+" then
 				
 					num2= caixa2.text
@@ -269,13 +248,16 @@ function eventos(event)
 			end
 		else
 			if calculadora.apaga == true then
-			caixa2.text = ""
-			caixa2.text = caixa2.text .. event.target:getLabel()
-			calculadora.apaga = false
+				
+				caixa2.text = ""
+				caixa2.text = caixa2.text .. event.target:getLabel()
+				calculadora.apaga = false
+				
 			else
 			
-			caixa2.text = caixa2.text .. event.target:getLabel()
-		end
+				caixa2.text = caixa2.text .. event.target:getLabel()
+			
+			end
 		end
 		end
 		end

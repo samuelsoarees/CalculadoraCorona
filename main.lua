@@ -30,7 +30,16 @@ y7 = valTelaY *7
 local caixa1 =display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/3,width= display.contentWidth,align = "right",fontSize = 25})
 local caixa2 = display.newText({text = "",x = display.contentWidth/2,y =(y1+y2)/2,width= display.contentWidth,align = "right",fontSize = 30})
 
-calculadora= {reinicio = false,inicializa = true}
+calculadora= {
+	
+	reinicio = false,
+	inicializa = true, 
+	verificaIgual = false,
+	apaga = false
+	
+}
+
+
 num1 = 0
 num2 = 0
 
@@ -122,6 +131,35 @@ function dividir(n1,n2)
 	return divisao
 end
 
+function repeticaoIgual()
+	
+		
+	if operacao == "+" then
+		
+		caixa2.text = somar(num1,num2)
+		
+	else if operacao == "-" then
+		num1 = calculadora.resultado
+		caixa2.text = subtrair(num1,num2)
+
+	else if operacao == "*" then
+		num1 = calculadora.resultado
+		caixa2.text = multiplicar(num1,num2)
+	
+	else if operacao == "/" then
+		num1 = calculadora.resultado
+		caixa2.text = dividir(num1,num2)
+
+
+	end
+	end
+	end
+	end	
+	
+	
+end
+
+
 function eventos(event)
 	
 	if event.phase == "began" then
@@ -181,6 +219,9 @@ function eventos(event)
 			caixa2.text = caixa2.text * -1
 			
 			end
+		
+		
+		
 		else if event.target:getLabel() == "," then
 			
 			caixa2.text = caixa2.text .. "."
@@ -193,38 +234,48 @@ function eventos(event)
 			else
 				caixa2.text = caixa2.text /100
 			end
+		
+		
 		else if event.target:getLabel() == "=" then
 			
-			calculadora.reinicio = true
+			if caixa2.text ~= "" and num1 ~= "" and caixa2.text ~= "Não se divide por zero!" then
+				calculadora.apaga = true
+				if operacao ==  "+" then
+				
+					num2= caixa2.text
+					caixa2.text = somar(num1,num2)
+					
+				
+				else if operacao ==  "-" then
+					num2= caixa2.text
+					caixa2.text = subtrair(num1,num2)
 			
-			if operacao ==  "+" then
 				
-				num2= caixa2.text
-				caixa2.text = somar(num1,num2)
-				
-			else if operacao ==  "-" then
-				num2= caixa2.text
-				caixa2.text = subtrair(num1,num2)
-				
-			else if operacao == "*" then
-				num2 = caixa2.text
-				caixa2.text = multiplicar(num1,num2)
-				
-				
-			else if operacao == "/" then
-				num2 = caixa2.text
-				caixa2.text = dividir(num1,num2)
-				
+				else if operacao == "*" then
+					num2 = caixa2.text
+					caixa2.text = multiplicar(num1,num2)
 			
+				
+				else if operacao == "/" then
+					num2 = caixa2.text
+					caixa2.text = dividir(num1,num2)
+			
+			
+				end
+				end
+				end
+				
 			end
 			end
-			end
-			end
-		
 		else
+			if calculadora.apaga == true then
+			caixa2.text = ""
+			caixa2.text = caixa2.text .. event.target:getLabel()
+			calculadora.apaga = false
+			else
 			
 			caixa2.text = caixa2.text .. event.target:getLabel()
-		
+		end
 		end
 		end
 		end
